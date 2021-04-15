@@ -1,44 +1,70 @@
-var abs = function(a){
-    if(a < 0n){
-        a = -a;
-    }
-    return a;
-};
-
-
-var gcd = function(a,b){
-    if(a === 0n || b === 0n){
-        return 1n;//to prevent bug
-    }
-    a = abs(a);
-    b = abs(b);
-    while(true){
-        if(a < b){//a must be bigger than a
-            var temp = a;
-            a = b;
-            b = temp
-        }
-        var c = a%b;
-        if(c === 0n){
-            return b;
-        }
-        a = c;
-    }
-};
-
-
 var Frac = function(a,b){
     //a,b are big numbers
     this.a = a;
     this.b = b;
     
     
+    var abs = function(a){
+        if(a < 0n){
+            a = -a;
+        }
+        return a;
+    };
+
+
+    var gcd = function(a,b){
+        if(a === 0n || b === 0n){
+            return 1n;//to prevent bug
+        }
+        a = abs(a);
+        b = abs(b);
+        while(true){
+            if(a < b){//a must be bigger than a
+                var temp = a;
+                a = b;
+                b = temp
+            }
+            var c = a%b;
+            if(c === 0n){
+                return b;
+            }
+            a = c;
+        }
+    };
+
+
     var tenToTheN = function(n){
         var str = "";
         for(var i = 0; i < n; i++){
             str += 0;
         }
         return BigInt("1"+str);
+    };
+
+    var factorial = function(a){//gets a normal int and returns a bigint
+        var fact = BigInt(1);
+        while(a > 0){
+            fact *= BigInt(a);
+            a--;
+        }
+        return fact;
+    };
+    
+    this.abs = abs;
+    this.gcd = gcd;
+    this.tenToTheN = tenToTheN;
+    this.factorial = factorial;
+    
+    
+    this.roundToNthDegree = function(n){
+        var at = this.a.toString();
+        var bt = this.b.toString();
+        var tlen = at.length < bt.length ? at.length : bt.length;//the smaller one
+        var dlen = tlen-n;//number of digits to be rounded
+        if(dlen <= 0){
+            return new Frac(this.a,this.b);//yup because it's immutable
+        }
+        return new Frac(BigInt(at.slice(0,-dlen)),BigInt(bt.slice(0,-dlen)));
     };
     
     this.simplify = function(){
@@ -84,31 +110,12 @@ var Frac = function(a,b){
         return new Frac(this.a,this.b);
     };
     this.getDecimal = function(n){//get nth decimal
-        return (this.a*tenToTheN(n)/this.b).toString();
+        var str = (this.a*tenToTheN(n)/this.b).toString();
+        var int = str.slice(0,-n);
+        var digits = str.slice(-n);
+        return int+"."+digits;
     };
 };
 
-console.log(gcd(3n,14n));
 
 
-var calculatePiLeibniz = function(){//very inefficient
-    var sum = new Frac(0n,1n);
-    var sign = 1;
-    for(var i = 0; i < 500; i++){
-        console.log(i);
-        var nth = new Frac(1n,BigInt(sign*(i*2+1)));
-        sign = -sign;
-        console.log(nth);
-        sum = sum.add(nth);
-        console.log(sum);
-        //sum = sum.add(new Frac(1n,BigInt(sign*(i*2+1))));
-        //sum.simplify();
-    }
-    sum = sum.multiply(new Frac(4n,1n))
-    
-    console.log(sum.a);
-    console.log(sum.b);
-    console.log(sum.getDecimal(100));
-};
-
-calculatePi();
