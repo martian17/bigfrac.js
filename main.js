@@ -89,7 +89,7 @@ var Frac = function(a,b){
         //var b = rcoef*this.b;
         var a = this.a*frac.b+this.b*frac.a;
         var b = this.b*frac.b;
-        return (new Frac(a,b)).simplify();;
+        return (new Frac(a,b));
     };
     
     this.subtract = function(frac){
@@ -100,7 +100,7 @@ var Frac = function(a,b){
     this.multiply = function(frac){
         var a = frac.a*this.a;
         var b = frac.b*this.b;
-        return (new Frac(a,b)).simplify();
+        return (new Frac(a,b));
     };
     
     this.divide = function(frac){
@@ -116,6 +116,12 @@ var Frac = function(a,b){
         var int = str.slice(0,-n);
         var digits = str.slice(-n);
         return int+"."+digits;
+    };
+    this.multiplyBigint = function(n){
+        return new Frac(this.a*n,this.b);
+    };
+    this.divideBigint = function(n){
+        return new Frac(this.a,this.b*n);
     };
 };
 
