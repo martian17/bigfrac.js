@@ -68,14 +68,16 @@ var Frac = function(a,b){
     };
     
     this.simplify = function(){
+        var a = this.a;
+        var b = this.b;
         if(a === 0n){
-            this.b = 1n;
+            b = 1n;
         }else{
-            var com = gcd(this.a,this.b);
-            this.a /= com;
-            this.b /= com;
+            var com = gcd(a,b);
+            a /= com;
+            b /= com;
         }
-        return this;
+        return new Frac(a,b);
     };
     
     this.add = function(frac){
