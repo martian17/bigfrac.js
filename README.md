@@ -1,5 +1,5 @@
 # BigFrac.js
-This is a wrapper for BigInt type in JavaScript that I created to calculate π to an arbitrary precision.
+This is a wrapper for BigInt in JavaScript that I created to calculate π to an arbitrary precision.
 
 ## Uses and examples
 ```JavaScript
