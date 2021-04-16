@@ -41,8 +41,8 @@ All methods are immutable. This is to mimic the behavior of native number and st
 | multiply         | Frac         | Frac         |                                          |
 | divide           | Frac         | Frac         |                                          |
 | invert           | Frac         | Frac         | Swaps the denominator and the numerator  |
-| getDecimal       | Int          | String       | Argument is the resulting decimal length |
 | roundToNthDegree | Int          | Frac         | Throws away digits of denominator and numerator<br> after a certain length based on which one<br>is shorter |
+| getDecimal       | Int          | String       | Argument is the resulting decimal length |
 ### Independent methods
 acts as independent functions unrelated to the contents of the Frac instance
 | Method name | Argument     | Return value |
